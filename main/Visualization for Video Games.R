@@ -1,6 +1,7 @@
 library(tidyverse)
 library(dplyr)
 library(readxl)
+library(gganimate)
 library(shiny)
 
 Video_Games_Sales <- read_excel("C:/Users/sniss/OneDrive/Desktop/CSC 324/Data Set/Video_Games_Sales_as_at_22_Dec_2016.xlsx")
@@ -17,11 +18,20 @@ by_gamesales <- filter(Video_Games_Sales, Global_Sales > .001)
 #View(Xbox1_Games_Sales)
 #view(top_selling_xbox)
 
-clean<-filter(Video_Games_Sales,Global_Sales>.37 & Critic_Score > 40)
+#clean<-filter(Video_Games_Sales,Global_Sales>.37 & Critic_Score > 40)
 
-ggplot(filter(Video_Games_Sales,Global_Sales>.37), aes(x= User_Score*10, y = Critic_Score))+
-  geom_point()+
-  geom_point(data = Video_Games_Sales %>% select(Platform:Critic_Score,Rating,User_Score), aes(color=Genre, size = (Global_Sales)),show.legend=TRUE)
+filtered<-Video_Games_Sales%>% filter(!is.na(as.numeric(Year_of_Release)%%1==0))
+clean<-filter(mutate(filtered, year=as.integer(Year_of_Release)), !is.na(year))
+
+
+totalplot<-ggplot(
+  clean, aes(x= (User_Score*10), y = Critic_Score,size=Global_Sales))+
+  geom_point(data = clean,aes(color=Genre),show.legend=FALSE, alpha= .5)+
+  scale_size(range=c(2,100))+
+  transition_time(year)+
+  labs(x="User Score", y="Critic Score",title = "Year of Release: {frame_time}")
+largegif<-animate(totalplot, height=800, width=800, nframes = 700)
+
 
 #ggplot(Xbox1_Games_Sales, aes(x= Global, y = Year))+
  # geom_point()+ 
