@@ -29,7 +29,8 @@ I think I could improve the overall look of my dashboard since it seems kind of 
 
 # Video Demo
 [![Watch the video](https://img.youtube.com/vi/Q1QrZVkMxio/default.jpg)](https://youtu.be/Q1QrZVkMxio) 
-"Click To Play Me"
+#### Click To Play Me
+
 
 
 # Sources and Resources
