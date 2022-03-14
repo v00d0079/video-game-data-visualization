@@ -27,6 +27,11 @@ After creating my graphs and animations I discovered some pretty important thing
 # Improvements
 I think I could improve the overall look of my dashboard since it seems kind of basic in my opinion. I also would love to improve the data set as sometimes it felt somewhat incomplete or lacking in various areas which made it more difficult to work with. I also would stay away from animations in the future as it takes a ridiculous time to render gifs for the graphs often taking 15-20 minutes for all 3 on a good day.
 
+# Video Demo
+[![Watch the video](https://img.youtube.com/vi/Q1QrZVkMxio/default.jpg = 640 x 360)](https://youtu.be/Q1QrZVkMxio) 
+"Click To Play Me"
+
+
 # Sources and Resources
 
 Data: https://www.kaggle.com/sidtwr/videogames-sales-dataset
