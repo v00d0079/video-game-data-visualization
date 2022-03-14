@@ -1,0 +1,124 @@
+---
+title: "Video Game Sales Data"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+<!-- Using the graphs established in my other R file-->
+```{r setup, include=FALSE}
+source("Visualization for Video Games.R")
+```
+<!-- Creates the first page which includes a drop down menue to change 3 interactable graphs-->
+Interactive Plots
+===
+<!-- Sets up the various selectable variables for the interatvie graph-->
+```{r data}
+Categorical.Variables = c("Genre","Platform","Rating")
+Numeric.Variables = c("year","NA_Sales","EU_Sales","JP_Sales","Other_Sales","Global_Sales","Critic_Score","User_Score")
+```
+<!-- Side bar that allows you to select the variables established above-->
+Column {.sidebar data-width=200}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput("categorical_variable", label = "Select Categorical Variable:", choices = Categorical.Variables)
+
+selectInput("numeric_variable", label = "Select Numeric Variable:", choices = Numeric.Variables)
+
+```
+<!-- Creates the first column which stores the bar graph using the variables selected-->
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Chart A
+```{r}
+renderPlotly({
+   plot_ly(clean,
+              x = ~clean[[input$numeric_variable]],
+              color = ~clean[[input$categorical_variable]],
+              type = "box") %>%
+  layout(title = "",
+         xaxis = list(title = "" ,
+                      zeroline = FALSE))
+})
+```
+
+<!-- Creates the second column that houses the bar and histogram graphs based on variables-->
+Column {data-width=400}
+-----------------------------------------------------------------------
+<!-- creates the bar graph using plotly-->
+### Chart B
+```{r}
+renderPlotly({
+  clean %>%
+    count(var = clean[[input$categorical_variable]], name = "count") %>%
+    plot_ly( x = ~var, y = ~ count, type = "bar", marker = list(color = '#008ae6',
+                           line = list(color = '#008ae6', width = 2)), hoverinfo = "x+y") %>%
+    add_text(text = ~paste0( " (",   scales::percent(count/sum(count)),")"), 
+           textposition = "bottom", 
+           textfont = list(size = 12, color = "white"), 
+           showlegend = FALSE) %>%
+    layout(xaxis = list(title = ""), yaxis = list(title = ""))
+    
+})
+```
+<!-- creates the histogram graph using plotly-->
+### Chart C
+```{r}
+renderPlotly({
+  plot_ly(x = clean[[input$numeric_variable]], type = "histogram",  marker = list(color = "#008ae6",
+                            line = list(color = "darkgray",
+                                        width = 1)))
+})
+
+```
+<!-- Creates the second tab which includes the two sales by User and Critic scores animations with both displayed at once-->
+Game Sales Animations
+================================
+Column {data-width=950}
+-----------------------------------------------------------------------
+<!-- Just renders an already saved gif without the ratings facets -->
+### Sales by Critic and User Score
+```{r fig.align='center'}
+renderImage({
+   list(src = "GameSalesData.gif",
+         contentType = 'image/gif'
+         # width = 400,
+         # height = 300,
+         # alt = "This is alternate text"
+    )}, deleteFile = TRUE)
+```
+
+Column {data-width=950}
+---------------------------------------------------------------------
+<!-- Just renders an already saved gif with the ratings facets -->
+### Sales by Ratings
+```{r fig.align='center'}
+renderImage({
+  list(src = "gamesalesbyrating.gif",
+       contentType = 'image/gif'
+       # width = 400,
+       # height = 300,
+       # alt = "This is alternate text"
+  )}, deleteFile = TRUE)
+```
+<!-- Creates a third tab that shows the top 10 selling games based on cumulative sales per year-->
+<!-- Note this is not an overall graph so games that sell the best in one year will appear but not reappear in later years unless there was sales data for a different year for the game-->
+Top Selling Games per Year
+==============================
+Column {data-width=950}
+-----------------------------------------------------------------------
+<!-- Just renders an already saved gif of the top 10 games per year -->
+### Top Selling Games
+```{r}
+renderImage({
+
+  list(src = "TopSellsData.gif",
+       contentType = 'image/gif'
+       # width = 400,
+       # height = 300,
+       # alt = "This is alternate text"
+  )}, deleteFile = TRUE)
+```
