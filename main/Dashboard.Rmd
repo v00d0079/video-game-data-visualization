@@ -32,7 +32,7 @@ selectInput("numeric_variable", label = "Select Numeric Variable:", choices = Nu
 Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Chart A
+### Box Plot using Catagorical and Numeric Variable
 ```{r}
 renderPlotly({
    plot_ly(clean,
@@ -49,7 +49,7 @@ renderPlotly({
 Column {data-width=400}
 -----------------------------------------------------------------------
 <!-- creates the bar graph using plotly-->
-### Chart B
+### Count of Categorical Variable
 ```{r}
 renderPlotly({
   clean %>%
@@ -65,7 +65,8 @@ renderPlotly({
 })
 ```
 <!-- creates the histogram graph using plotly-->
-### Chart C
+
+### Count of Numerical Variable
 ```{r}
 renderPlotly({
   plot_ly(x = clean[[input$numeric_variable]], type = "histogram",  marker = list(color = "#008ae6",
@@ -75,6 +76,7 @@ renderPlotly({
 
 ```
 <!-- Creates the second tab which includes the two sales by User and Critic scores animations with both displayed at once-->
+
 Game Sales Animations
 ================================
 Column {data-width=950}
@@ -106,6 +108,7 @@ renderImage({
 ```
 <!-- Creates a third tab that shows the top 10 selling games based on cumulative sales per year-->
 <!-- Note this is not an overall graph so games that sell the best in one year will appear but not reappear in later years unless there was sales data for a different year for the game-->
+
 Top Selling Games per Year
 ==============================
 Column {data-width=950}
