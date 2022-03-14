@@ -4,6 +4,4 @@
 Specific Coding documentation is included in both the .rmd and .r file
 
 # Video Demo
-<p align=center>
-https://yt-embed.herokuapp.com/embed?v=Q1QrZVkMxio
-</p>
+[![Watch the video](https://img.youtube.com/vi/nTQUwghvy5Q/default.jpg)](https://youtu.be/nTQUwghvy5Q)
